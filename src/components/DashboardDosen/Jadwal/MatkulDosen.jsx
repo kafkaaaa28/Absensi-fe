@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../../utils/api';
-
+import ModalLihatSiswaKelas from './ModalLihatSiswaKelas';
 const MatkulDosen = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState(null);
+  const [selectedKelas, setSelectedKelas] = useState(null);
+  const [showModalKelas, setshowModalKelas] = useState(false);
 
   const fetchmatkul = async (params) => {
     try {
       const res = await api.get('/dosen/kelasdosen');
       setData(res.data);
-      console.log(res.data);
     } catch (err) {
       console.log(err.response?.data.message);
       setError('Gagal fetch data');
     } finally {
       setLoading(false);
     }
+  };
+  const handleKelas = (item) => {
+    setshowModalKelas(true);
+    setSelectedKelas(item);
   };
   useEffect(() => {
     fetchmatkul();
@@ -49,6 +54,9 @@ const MatkulDosen = () => {
                 <th scope="col" className="px-6 py-3">
                   Kode Matakuliah
                 </th>
+                <th scope="col" className="px-6 py-3">
+                  Aksi
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -74,6 +82,14 @@ const MatkulDosen = () => {
                       <td className="px-6 py-4">{item.nama_matkul}</td>
                       <td className="px-6 py-4">{item.semester}</td>
                       <td className="px-6 py-4">{item.kode_matkul}</td>
+                      <td className="px-6 py-4">
+                        <div className="flex space-x-2">
+                          <button className="bg-green-400 text-white px-3 py-1 rounded hover:bg-green-500" onClick={() => handleKelas(item)}>
+                            Lihat Mahasiswa
+                          </button>
+                          <button className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-500">Lihat Absensi</button>
+                        </div>
+                      </td>
                     </tr>
                   ))
               )}
@@ -81,6 +97,7 @@ const MatkulDosen = () => {
           </table>
         </div>
       </div>
+      <ModalLihatSiswaKelas modalLihat={showModalKelas} data={selectedKelas} OnClose={setshowModalKelas} />
     </>
   );
 };

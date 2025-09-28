@@ -107,6 +107,9 @@ const Matkul = () => {
                   semester
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  sks
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Kode Matakuliah
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -135,6 +138,7 @@ const Matkul = () => {
                       <td className=" px-6 py-4">{index + 1}</td>
                       <td className="px-6 py-4">{item.nama_matkul}</td>
                       <td className="px-6 py-4">{item.semester}</td>
+                      <td className="px-6 py-4">{item.sks}</td>
                       <td className="px-6 py-4">{item.kode_matkul}</td>
                       <td className="px-6 py-4">
                         <div className="flex space-x-2">

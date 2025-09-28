@@ -11,6 +11,7 @@ function TambahMatkul({ isOpen, setIsOpen, onSuccess }) {
     nama_matkul: '',
     semester: '',
     kode_matkul: '',
+    sks: '',
   });
   const fetchDosen = async () => {
     try {
@@ -25,7 +26,7 @@ function TambahMatkul({ isOpen, setIsOpen, onSuccess }) {
   useEffect(() => {
     fetchDosen();
   }, []);
-  const { nama_matkul, semester, kode_matkul } = formData;
+  const { nama_matkul, semester, sks, kode_matkul } = formData;
   const handleClose = () => setIsOpen(false);
   const handleChange = (e) => {
     setFromData({ ...formData, [e.target.name]: e.target.value });
@@ -77,7 +78,11 @@ function TambahMatkul({ isOpen, setIsOpen, onSuccess }) {
             </div>
             <div>
               <Label htmlFor="semester" value="semester" />
-              <TextInput type="semester" id="semester" name="semester" typeof="number" placeholder="Masukkan semester" value={semester} onChange={handleChange} />
+              <TextInput type="number" id="semester" name="semester" typeof="number" placeholder="Masukkan semester" value={semester} onChange={handleChange} />
+            </div>
+            <div>
+              <Label htmlFor="sks" value="sks" />
+              <TextInput type="number" id="sks" name="sks" typeof="number" placeholder="Masukkan sks" value={sks} onChange={handleChange} />
             </div>
             <div>
               <Label htmlFor="kode_matkul" value="kode_matkul" />

@@ -11,15 +11,29 @@ function TambahJadwal({ isOpen, setIsOpen, onSuccess }) {
     id_kelas: '',
     hari: '',
     jam_mulai: '',
-    jam_selesai: '',
     ruang: '',
   });
-  const { id_kelas, hari, jam_mulai, jam_selesai, ruang } = formData;
+  const { id_kelas, hari, jam_mulai, ruang } = formData;
 
   const handleClose = () => setIsOpen(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === 'id_kelas') {
+      const selected = data.find((item) => item.id_kelas.toString() === e.target.value);
+      if (selected) {
+        setFormData({
+          ...formData,
+          id_kelas: selected.id_kelas,
+          sks: selected.sks,
+        });
+      } else {
+        setFormData({
+          ...formData,
+          id_kelas: '',
+        });
+      }
+    }
   };
 
   const showAlert = () => {
@@ -40,6 +54,7 @@ function TambahJadwal({ isOpen, setIsOpen, onSuccess }) {
     try {
       const res = await api.get('/kelas');
       setData(res.data);
+      console.log(res.data);
     } catch (err) {
       console.log(err.response?.data.message);
     } finally {
@@ -92,6 +107,10 @@ function TambahJadwal({ isOpen, setIsOpen, onSuccess }) {
                 ))}
               </select>
             </div>
+            <p style={{ display: 'none' }}>{formData.sks}</p>
+            <div>
+              <TextInput id="jam_mulai" name="jam_mulai" type="text" value={`${formData.sks} sks`} disabled />
+            </div>
             <div>
               <Label htmlFor="hari" value="hari" />
               <select id="hari" name="hari" value={hari} onChange={handleChange} className="mt-1 block w-full text-sm text-gray-500 border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
@@ -107,13 +126,12 @@ function TambahJadwal({ isOpen, setIsOpen, onSuccess }) {
               </select>
             </div>
             <div>
+              <label className="text-gray-500 text-sm">Jam Mulai</label>
+
               <Label htmlFor="jam_mulai" value="Jam Mulai" />
               <TextInput id="jam_mulai" name="jam_mulai" type="time" placeholder="Contoh: 08:00" value={jam_mulai} onChange={handleChange} />
             </div>
-            <div>
-              <Label htmlFor="jam_selesai" value="Jam Selesai" />
-              <TextInput id="jam_selesai" name="jam_selesai" type="time" placeholder="Contoh: 10:00" value={jam_selesai} onChange={handleChange} />
-            </div>
+
             <div>
               <Label htmlFor="ruang" value="Ruang" />
               <TextInput id="ruang" name="ruang" placeholder="Contoh: A101" value={ruang} onChange={handleChange} />

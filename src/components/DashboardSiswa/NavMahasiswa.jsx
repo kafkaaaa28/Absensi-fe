@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { FaBars, FaHome, FaChalkboardTeacher, FaBook, FaCalendarAlt } from 'react-icons/fa';
+import { FaBars, FaHome, FaChalkboardTeacher, FaBook, FaBookOpen, FaCalendarAlt } from 'react-icons/fa';
+
 import { RiLogoutBoxLine } from 'react-icons/ri';
 import { FaUserGraduate } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
@@ -70,6 +71,12 @@ const Navdashboard = ({ setIsAuthenticated, setUser }) => {
               <Link to={'/dashboard/jadwalsaya'} className="flex items-center p-2 text-white rounded-lg  hover:bg-gray-700">
                 <FaCalendarAlt className="text-green-500" />
                 <span className="ms-3">Jadwal</span>
+              </Link>
+            </li>
+            <li>
+              <Link to={'/dashboard/matkulsaya'} className="flex items-center p-2 text-white rounded-lg  hover:bg-gray-700">
+                <FaBookOpen className="text-blue-500" />
+                <span className="ms-3">MataKuliah</span>
               </Link>
             </li>
           </ul>

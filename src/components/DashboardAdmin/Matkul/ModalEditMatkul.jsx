@@ -42,28 +42,14 @@ const ModalEditMatkul = ({ data, onUpdate, showEditModal, loading, setLoading, s
               <label className="block mb-1 font-medium">Nama</label>
               <input className="w-full border px-3 py-2 rounded" name="nama_matkul" value={formData.nama_matkul} onChange={handleChange} />
             </div>
-            {/* <div>
-              <label className="block mb-1 font-medium">Nama Dosen</label>
 
-              <select
-                name="id_dosen"
-                value={formData.id_dosen || ''}
-                onChange={handleChange}
-                className="mt-1 block w-full text-sm text-gray-500 border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-              >
-                <option className="text-gray-500" value="">
-                  Pilih Dosen
-                </option>
-                {datas.map((item) => (
-                  <option key={item.id_dosen} value={item.id_dosen}>
-                    {item.nama}
-                  </option>
-                ))}
-              </select>
-            </div> */}
             <div>
               <label className="block mb-1 font-medium">semester</label>
               <input className="w-full border px-3 py-2 rounded" name="semester" value={formData.semester} onChange={handleChange} />
+            </div>
+            <div>
+              <label className="block mb-1 font-medium">sks</label>
+              <input className="w-full border px-3 py-2 rounded" name="sks" value={formData.sks} onChange={handleChange} />
             </div>
             <div>
               <label className="block mb-1 font-medium">Kode Matakuliah</label>

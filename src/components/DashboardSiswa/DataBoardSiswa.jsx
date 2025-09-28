@@ -15,6 +15,8 @@ const DataBoardSiswa = () => {
       setLoading(false);
       const resMatkul = await api.get('/siswa/matkulsiswa');
       setTotalMatkul(resMatkul.data.length);
+      const resJadwalHarini = await api.get('/siswa/jadwalharini');
+      setJadwalHarini(resJadwalHarini.data.length);
     } catch (err) {
       setLoading(false);
       setError('Gagal mengambil data: ' + (err.response?.data?.message || err.message));
@@ -76,7 +78,7 @@ const DataBoardSiswa = () => {
           </div>
         </div>
       </div>
-      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-1">
+      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
         <div className="bg-white rounded-lg shadow p-6 hover:shadow-xl transition duration-300">
           <div className="flex items-center space-x-4">
             <div className="bg-blue-100 p-3 rounded-full">
@@ -88,7 +90,21 @@ const DataBoardSiswa = () => {
             </div>
           </div>
         </div>
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-1">
+          <div className="bg-white rounded-lg shadow p-6 hover:shadow-xl transition duration-300">
+            <div className="flex items-center space-x-4">
+              <div className="bg-green-100 p-3 rounded-full">
+                <FaCalendarAlt className="w-8 h-8 text-green-600" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Total Jadwal Saya Hari ini</p>
+                <p className="text-2xl font-semibold text-gray-700">{loading ? <Spinner color="info" aria-label="Info spinner example" /> : jadwalharini}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div className="bg-gray-200 mt-3 rounded-lg">
         <div className=" flex p-3">
           <p className="font-bold text-md">Jadwal Harini, {hariIni}</p>

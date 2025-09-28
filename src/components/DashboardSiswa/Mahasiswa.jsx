@@ -4,6 +4,7 @@ import Navdashboard from './NavMahasiswa';
 import DataBoardSiswa from './DataBoardSiswa';
 import ProfileSiswa from './Profile/ProfileSiswa';
 import JadwalSiswa from './Jadwal/JadwalSiswa';
+import MatkulSiswa from './matkul/MatkulSiswa';
 const Admin = ({ setIsAuthenticated, setUser }) => {
   return (
     <div className="min-h-screen w-full bg-[#FAF7F2] ">
@@ -14,6 +15,7 @@ const Admin = ({ setIsAuthenticated, setUser }) => {
             <Route index element={<DataBoardSiswa />} />
             <Route path="/profilesaya" element={<ProfileSiswa />} />
             <Route path="/jadwalsaya" element={<JadwalSiswa />} />
+            <Route path="/Matkulsaya" element={<MatkulSiswa />} />
           </Routes>
         </div>
       </div>

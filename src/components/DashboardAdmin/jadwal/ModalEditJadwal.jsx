@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
+import { Modal, ModalBody, ModalHeader, TextInput } from 'flowbite-react';
 import api from '../../../utils/api';
 const ModalEditJadwal = ({ data, onUpdate, showEditModal, loading, setShowEditModal }) => {
   const [formData, setFormData] = useState({ ...data });
@@ -11,6 +11,21 @@ const ModalEditJadwal = ({ data, onUpdate, showEditModal, loading, setShowEditMo
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (name === 'id_kelas') {
+      const selected = datas.find((item) => item.id_kelas.toString() === value);
+      if (selected) {
+        setFormData({
+          ...formData,
+          id_kelas: selected.id_kelas,
+          sks: selected.sks,
+        });
+      } else {
+        setFormData({
+          ...formData,
+          id_kelas: '',
+        });
+      }
+    }
   };
   const fetchKelas = async (params) => {
     try {
@@ -54,6 +69,9 @@ const ModalEditJadwal = ({ data, onUpdate, showEditModal, loading, setShowEditMo
               </select>
             </div>
             <div>
+              <TextInput id="jam_mulai" name="jam_mulai" type="text" value={undefined ? `Pilih Kelas Dahulu` : `${formData.sks} sks`} disabled />
+            </div>{' '}
+            <div>
               <select
                 id="hari"
                 name="hari"
@@ -81,17 +99,6 @@ const ModalEditJadwal = ({ data, onUpdate, showEditModal, loading, setShowEditMo
                   type="time"
                   placeholder="Contoh: 08:00"
                   value={formData.jam_mulai}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <input
-                  className="mt-1 block w-full text-sm text-gray-500 border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                  id="jam_selesai"
-                  name="jam_selesai"
-                  type="time"
-                  placeholder="Contoh: 10:00"
-                  value={formData.jam_selesai}
                   onChange={handleChange}
                 />
               </div>
