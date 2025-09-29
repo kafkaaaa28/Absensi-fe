@@ -70,7 +70,7 @@ const ModalEditJadwal = ({ data, onUpdate, showEditModal, loading, setShowEditMo
             </div>
             <div>
               <TextInput id="jam_mulai" name="jam_mulai" type="text" value={undefined ? `Pilih Kelas Dahulu` : `${formData.sks} sks`} disabled />
-            </div>{' '}
+            </div>
             <div>
               <select
                 id="hari"

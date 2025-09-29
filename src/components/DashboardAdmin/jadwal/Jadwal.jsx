@@ -32,7 +32,6 @@ const DataJadwal = () => {
   const fetchJadwal = async (params) => {
     try {
       const res = await api.get('/jadwal');
-      console.log(res.data);
       setData(res.data);
     } catch (err) {
       console.log(err.response?.data.message);

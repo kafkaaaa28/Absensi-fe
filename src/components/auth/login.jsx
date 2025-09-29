@@ -3,7 +3,7 @@ import api from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import appease from '../img/univ.png';
-import bgappease from '../img/bg.jpg';
+import bgappease from '../img/unnamed.png';
 const Login = ({ setIsAuthenticated, setUser }) => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
@@ -50,13 +50,13 @@ const Login = ({ setIsAuthenticated, setUser }) => {
       setLoading(false);
       console.error('Login error:', err.response?.data || err.message);
       setMessage('');
-      setError(err.response?.data?.message || 'Login Failed');
+      setError(`Login failed: ${err.response?.data?.message || err.message}`);
     }
   };
 
   return (
-    <div className=" bg-cover bg-center bg-fixed min-h-screen flex items-center justify-center " style={{ backgroundImage: `url(${bgappease})` }}>
-      <div className="bg-white/90 backdrop-blur-sm  rounded-2xl shadow-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+    <div className=" bg-cover bg-center  bg-fixed min-h-screen flex items-center justify-center " style={{ backgroundImage: `url(${bgappease})` }}>
+      <div className="bg-white/10 backdrop-blur-sm  rounded-2xl shadow-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
         <img src={appease} alt="Logo Piksi" className="w-20 mb-2 mx-auto" />
         <h1 className="text-xl text-center font-semibold mb-5 text-black">E - LEARNING </h1>
         <div className=" mb-4">

@@ -54,7 +54,6 @@ function TambahJadwal({ isOpen, setIsOpen, onSuccess }) {
     try {
       const res = await api.get('/kelas');
       setData(res.data);
-      console.log(res.data);
     } catch (err) {
       console.log(err.response?.data.message);
     } finally {

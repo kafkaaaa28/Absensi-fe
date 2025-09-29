@@ -6,7 +6,6 @@ const JadwalSiswaHarini = () => {
     try {
       const res = await api.get('/siswa/jadwalharini');
       setData(res.data);
-      console.log(res.data);
     } catch (err) {
       console.log(err.response?.data.message);
     }

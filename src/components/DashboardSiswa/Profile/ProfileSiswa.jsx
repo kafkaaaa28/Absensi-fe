@@ -6,12 +6,12 @@ import { IoMdSchool } from 'react-icons/io';
 const ProfileSiswa = () => {
   const [siswa, setSiswa] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [qrpath, setQrpath] = useState(null);
   const fetchProfile = async () => {
     try {
       const res = await api.get('/siswa/profilesiswa');
-      if (res.data && res.data.length > 0) {
-        setSiswa(res.data[0]);
+      if (res.data.data && res.data.data.length > 0) {
+        setSiswa(res.data.data[0]);
       } else {
         setSiswa(null);
       }
@@ -21,9 +21,20 @@ const ProfileSiswa = () => {
       setLoading(false);
     }
   };
+  const isDevelopment = window.location.hostname === 'localhost';
 
+  const baseURL = isDevelopment ? 'http://localhost:5000' : 'http://192.168.0.107:5000';
+  const fetchqr = async () => {
+    try {
+      const res = await api.get('/siswa/qrsiswa');
+      setQrpath(`${baseURL}${res.data.qr}`);
+    } catch (err) {
+      console.log(err.response?.data?.message || err.message);
+    }
+  };
   useEffect(() => {
     fetchProfile();
+    fetchqr();
   }, []);
 
   if (loading) {
@@ -33,7 +44,6 @@ const ProfileSiswa = () => {
       </div>
     );
   }
-
   if (!siswa) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -49,7 +59,9 @@ const ProfileSiswa = () => {
         <h2 className="text-xl font-semibold mt-4">{siswa.nama}</h2>
         <p className="text-gray-500">{siswa.role}</p>
       </div>
-
+      <div className=" flex items-center justify-center">
+        <img src={qrpath} alt="QR Mahasiswa" style={{ width: 200, height: 200 }} />
+      </div>
       <div className="mt-6 space-y-4">
         <div className="flex items-center gap-4">
           <FaEnvelope className="text-[#162542]" />
