@@ -6,6 +6,7 @@ import api from './utils/api';
 import Admin from './components/DashboardAdmin/Admin';
 import Dosen from './components/DashboardDosen/Dosen';
 import Mahasiswa from './components/DashboardSiswa/Mahasiswa';
+import Beranda from './components/Beranda';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [user, setUser] = useState(null);
@@ -39,14 +40,17 @@ function App() {
         setLoading(false);
       }
     };
+
     checkAuth();
   }, []);
 
   return (
-    <div className=" overflow-hidden">
+    <div className="overflow-hidden">
       <Routes>
+        <Route path="/" element={<Beranda setIsAuthenticated={setIsAuthenticated} setUser={setUser} isAuthenticated={isAuthenticated} />} />
+
         <Route
-          path="/"
+          path="/login"
           element={
             isAuthenticated && user?.role === 'admin' ? (
               <Navigate to="/dashboardAdmin" />
@@ -59,9 +63,12 @@ function App() {
             )
           }
         />
-        <Route path="/dashboardAdmin/*" element={isAuthenticated && user?.role === 'admin' ? <Admin setIsAuthenticated={setIsAuthenticated} setUser={setUser} /> : <Navigate to={'/'} />} />
-        <Route path="/dashboardDosen/*" element={isAuthenticated && user?.role === 'dosen' ? <Dosen setIsAuthenticated={setIsAuthenticated} setUser={setUser} /> : <Navigate to={'/'} />} />
-        <Route path="/dashboard/*" element={isAuthenticated && user?.role === 'siswa' ? <Mahasiswa setIsAuthenticated={setIsAuthenticated} setUser={setUser} /> : <Navigate to={'/'} />} />
+
+        <Route path="/dashboardAdmin/*" element={isAuthenticated && user?.role === 'admin' ? <Admin setIsAuthenticated={setIsAuthenticated} setUser={setUser} /> : <Navigate to="/" />} />
+
+        <Route path="/dashboardDosen/*" element={isAuthenticated && user?.role === 'dosen' ? <Dosen setIsAuthenticated={setIsAuthenticated} setUser={setUser} /> : <Navigate to="/" />} />
+
+        <Route path="/dashboard/*" element={isAuthenticated && user?.role === 'siswa' ? <Mahasiswa setIsAuthenticated={setIsAuthenticated} setUser={setUser} /> : <Navigate to="/" />} />
       </Routes>
     </div>
   );

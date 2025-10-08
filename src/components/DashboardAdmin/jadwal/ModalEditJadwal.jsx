@@ -88,6 +88,7 @@ const ModalEditJadwal = ({ data, onUpdate, showEditModal, loading, setShowEditMo
                 <option value="Kamis">Kamis</option>
                 <option value="Jumat">Jumat</option>
                 <option value="Sabtu">Sabtu</option>
+                <option value="Minggu">Minggu</option>
               </select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>

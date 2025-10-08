@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import * as faceapi from 'face-api.js';
 import api from '../../utils/api';
+import Swal from 'sweetalert2';
+
 const ModalFaceSiswa = ({ ModalFace, setModalFace }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -57,6 +59,10 @@ const ModalFaceSiswa = ({ ModalFace, setModalFace }) => {
       await api.post('/siswa/upload-face', {
         face_embedding: jsonString,
       });
+      Swal.fire({
+        title: 'Berhasil Scan Wajah!',
+        icon: 'success',
+      });
       if (videoRef.current && videoRef.current.srcObject) {
         const stream = videoRef.current.srcObject;
         stream.getTracks().forEach((track) => track.stop());
@@ -74,10 +80,8 @@ const ModalFaceSiswa = ({ ModalFace, setModalFace }) => {
   return (
     <>
       <Modal show={ModalFace} size="xl">
-        <ModalHeader className="bg-white">
-          <h2 className="text-xl font-bold text-black text-center">Qr Code</h2>
-        </ModalHeader>
         <ModalBody className="bg-white  ">
+          <h2 className="text-xl font-bold text-black text-center">Qr Code</h2>
           <form className="flex flex-col justify-center gap-3 items-center" onSubmit={captureFace}>
             <video ref={videoRef} autoPlay muted playsInline width="400" height="300" />
             <button className=" bg-blue-600 px-2 text-white py-2 rounded hover:bg-blue-700" type="submit">

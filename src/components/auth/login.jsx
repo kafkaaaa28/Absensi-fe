@@ -50,13 +50,13 @@ const Login = ({ setIsAuthenticated, setUser }) => {
       setLoading(false);
       console.error('Login error:', err.response?.data || err.message);
       setMessage('');
-      setError(`Login failed: ${err.response?.data?.message || err.message}`);
+      setError(`email atau Password Salah`);
     }
   };
 
   return (
     <div className=" bg-cover bg-center  bg-fixed min-h-screen flex items-center justify-center " style={{ backgroundImage: `url(${bgappease})` }}>
-      <div className="bg-white/10 backdrop-blur-sm  rounded-2xl shadow-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+      <div className="bg-white/10 backdrop-blur-sm  rounded-2xl shadow-2xl p-6 w-[80%] max-w-md max-h-[90vh] overflow-y-auto">
         <img src={appease} alt="Logo Piksi" className="w-20 mb-2 mx-auto" />
         <h1 className="text-xl text-center font-semibold mb-5 text-black">E - LEARNING </h1>
         <div className=" mb-4">

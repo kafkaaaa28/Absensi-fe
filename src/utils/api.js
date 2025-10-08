@@ -6,7 +6,7 @@ import axios from 'axios';
 // });
 const isDevelopment = window.location.hostname === 'localhost';
 
-const baseURL = isDevelopment ? 'http://localhost:5000/api' : 'http://192.168.0.107:5000/api';
+const baseURL = isDevelopment ? 'http://localhost:5000/api' : 'http://192.168.100.230:5000/api';
 
 const api = axios.create({
   baseURL: baseURL,

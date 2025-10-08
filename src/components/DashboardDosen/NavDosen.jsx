@@ -44,7 +44,7 @@ const Navdashboard = ({ setIsAuthenticated, setUser }) => {
       <aside id="default-sidebar" className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`} aria-label="Sidebar">
         <div className="h-full flex flex-col px-3 py-4 overflow-y-auto bg-[#162542]">
           <div className="flex flex-col justify-center items-center mb-5 gap-2">
-            <img class="w-14 h-14 rounded-full" src={appease} alt="Rounded avatar"></img>
+            <img className="w-14 h-14 rounded-full" src={appease} alt="Rounded avatar"></img>
             <p className="text-white font-bold uppercase">Universitas Appease</p>
           </div>
           <div className=" flex flex-col justify-center items-center gap-2">

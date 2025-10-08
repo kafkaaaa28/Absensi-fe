@@ -14,7 +14,7 @@ const ModalDetail = ({ data, modalLihat, OnClose }) => {
     if (formData.id_kelas) {
       fetchSiswa();
     }
-  }, [formData]);
+  }, [formData.id_kelas]);
 
   const fetchSiswa = async () => {
     try {

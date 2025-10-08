@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../../utils/api';
 import ModalLihatSiswaKelas from './ModalLihatSiswaKelas';
+import LihatAbsensi from '../Abensi/LihatAbsensi';
 const MatkulDosen = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -8,7 +9,7 @@ const MatkulDosen = () => {
   const [error, setError] = useState(null);
   const [selectedKelas, setSelectedKelas] = useState(null);
   const [showModalKelas, setshowModalKelas] = useState(false);
-
+  const [showModalAbsen, setshowModalAbsen] = useState(false);
   const fetchmatkul = async (params) => {
     try {
       const res = await api.get('/dosen/kelasdosen');
@@ -23,6 +24,10 @@ const MatkulDosen = () => {
   const handleKelas = (item) => {
     setshowModalKelas(true);
     setSelectedKelas(item);
+  };
+  const handleAbsensi = (item) => {
+    setSelectedKelas(item);
+    setshowModalAbsen(true);
   };
   useEffect(() => {
     fetchmatkul();
@@ -87,7 +92,9 @@ const MatkulDosen = () => {
                           <button className="bg-green-400 text-white px-3 py-1 rounded hover:bg-green-500" onClick={() => handleKelas(item)}>
                             Lihat Mahasiswa
                           </button>
-                          <button className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-500">Lihat Absensi</button>
+                          <button className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-500" onClick={() => handleAbsensi(item)}>
+                            Lihat Absensi
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -97,7 +104,8 @@ const MatkulDosen = () => {
           </table>
         </div>
       </div>
-      <ModalLihatSiswaKelas modalLihat={showModalKelas} data={selectedKelas} OnClose={setshowModalKelas} />
+      <ModalLihatSiswaKelas modalLihat={showModalKelas} data={selectedKelas} OnClose={() => setshowModalKelas(false)} />
+      <LihatAbsensi modalLihat={showModalAbsen} data={selectedKelas} OnClose={() => setshowModalAbsen(false)} />
     </>
   );
 };

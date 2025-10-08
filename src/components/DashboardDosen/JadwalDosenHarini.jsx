@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
 import Swal from 'sweetalert2';
 import ModalEdit from './Jadwal/ModalEditStatus';
+import ModalQrScan from './Abensi/ModalQrScan';
 const JadwalDosenharini = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedJadwal, setSelectedJadwal] = useState(null);
   const [showedit, setShowedit] = useState(false);
+  const [showOpenModal, setshowOpenModal] = useState(false);
+  const [OpenScan, setOpenScan] = useState(false);
+  const [cekDibuka, setCekDibuka] = useState(false);
   useEffect(() => {
     fetchJadwal();
   }, []);
@@ -22,10 +26,7 @@ const JadwalDosenharini = () => {
       setLoading(false);
     }
   };
-  const handlebuka = (item) => {
-    setSelectedJadwal(item);
-    handlebukaAbsen(item);
-  };
+
   const showAlert = () => {
     Swal.fire({
       title: 'Absensi Berhasil Dibuka',
@@ -40,20 +41,54 @@ const JadwalDosenharini = () => {
       text: 'Terjadi Error',
     });
   };
+
+  const editAlert = () => {
+    Swal.fire({
+      title: 'Update Status Berhasil',
+      icon: 'success',
+    });
+  };
   const handleEdit = (item) => {
     setSelectedJadwal(item);
     setShowedit(true);
   };
+  const handlebuka = (item) => {
+    setSelectedJadwal(item);
+    handlebukaAbsen(item);
+  };
+  const handelbukaScan = (item) => {
+    setSelectedJadwal(item);
+    setOpenScan(true);
+  };
   const handlebukaAbsen = async (item) => {
     try {
-      const res = await api.post(`/dosen/absensi/${item.id_kelas}/${item.id_jadwal}`);
+      const { id_kelas, id_jadwal } = item;
+      await api.post(`/dosen/absensi/${id_kelas}/${id_jadwal}`);
       showAlert();
+      setshowOpenModal(false);
     } catch (err) {
+      console.log(`gagal ${err.response?.data?.message}`);
       ErrAlert();
-      console.log(`gagal ${err.response.data.message}`);
     }
   };
-  const handleUpdate = async (e) => {};
+  const handleOpen = (item) => {
+    setSelectedJadwal(item);
+    setshowOpenModal(true);
+  };
+  const handleUpdate = async (updatedData) => {
+    setLoading(true);
+    try {
+      const res = await api.put(`/dosen/absen/update-all`, updatedData);
+      setShowedit(false);
+      editAlert();
+      setLoading(false);
+    } catch (err) {
+      console.error(`gagal memperbarui Data ${err.response.data.message}`);
+      setLoading(false);
+
+      ErrAlert();
+    }
+  };
   return (
     <>
       <div className="relative overflow-x-auto">
@@ -101,13 +136,15 @@ const JadwalDosenharini = () => {
                   <td className="px-6 py-4">
                     <div className="flex space-x-2">
                       <button className="bg-green-400 text-white px-3 py-1 rounded hover:bg-green-500" onClick={() => handlebuka(item)}>
-                        Buka Absen
+                        Buka Absensi
                       </button>
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex space-x-2">
-                      <button className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-500">Qr Scan</button>
+                      <button className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-500" onClick={() => handelbukaScan(item)}>
+                        Qr Scan
+                      </button>
                       <button className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-500">Face Scan</button>
                       <button className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-500" onClick={() => handleEdit(item)}>
                         Edit Absen
@@ -120,6 +157,7 @@ const JadwalDosenharini = () => {
           </tbody>
         </table>
       </div>
+      <ModalQrScan modalLihat={OpenScan} OnClose={setOpenScan} data={selectedJadwal} />
       <ModalEdit showEditModal={showedit} setShowEditModal={setShowedit} data={selectedJadwal} onUpdate={handleUpdate} />
     </>
   );
