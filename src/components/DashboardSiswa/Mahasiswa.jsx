@@ -7,6 +7,7 @@ import JadwalSiswa from './Jadwal/JadwalSiswa';
 import MatkulSiswa from './matkul/MatkulSiswa';
 import ModalFaceSiswa from './ModalFaceSiswa';
 import api from '../../utils/api';
+import AbsensiMahasiswa from './Absensi/AbsensiMahasiswa';
 const Admin = ({ setIsAuthenticated, setUser }) => {
   const [ModalFace, setModalFace] = useState(false);
 
@@ -36,6 +37,7 @@ const Admin = ({ setIsAuthenticated, setUser }) => {
             <Route path="/profilesaya" element={<ProfileSiswa />} />
             <Route path="/jadwalsaya" element={<JadwalSiswa />} />
             <Route path="/Matkulsaya" element={<MatkulSiswa />} />
+            <Route path="/absensi" element={<AbsensiMahasiswa />} />
           </Routes>
           <ModalFaceSiswa ModalFace={ModalFace} setModalFace={setModalFace} />
         </div>

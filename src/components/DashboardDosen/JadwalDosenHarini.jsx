@@ -3,6 +3,7 @@ import api from '../../utils/api';
 import Swal from 'sweetalert2';
 import ModalEdit from './Jadwal/ModalEditStatus';
 import ModalQrScan from './Abensi/ModalQrScan';
+import ModalFaceScan from './Abensi/ModalFaceScan';
 const JadwalDosenharini = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -11,6 +12,7 @@ const JadwalDosenharini = () => {
   const [showedit, setShowedit] = useState(false);
   const [showOpenModal, setshowOpenModal] = useState(false);
   const [OpenScan, setOpenScan] = useState(false);
+  const [OpenScanFace, setOpenScanFace] = useState(false);
   const [cekDibuka, setCekDibuka] = useState(false);
   useEffect(() => {
     fetchJadwal();
@@ -59,6 +61,10 @@ const JadwalDosenharini = () => {
   const handelbukaScan = (item) => {
     setSelectedJadwal(item);
     setOpenScan(true);
+  };
+  const handleFacescan = (item) => {
+    setSelectedJadwal(item);
+    setOpenScanFace(true);
   };
   const handlebukaAbsen = async (item) => {
     try {
@@ -145,7 +151,9 @@ const JadwalDosenharini = () => {
                       <button className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-500" onClick={() => handelbukaScan(item)}>
                         Qr Scan
                       </button>
-                      <button className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-500">Face Scan</button>
+                      <button className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-500" onClick={() => handleFacescan(item)}>
+                        Face Scan
+                      </button>
                       <button className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-500" onClick={() => handleEdit(item)}>
                         Edit Absen
                       </button>
@@ -158,6 +166,7 @@ const JadwalDosenharini = () => {
         </table>
       </div>
       <ModalQrScan modalLihat={OpenScan} OnClose={setOpenScan} data={selectedJadwal} />
+      <ModalFaceScan modalLihat={OpenScanFace} OnClose={setOpenScanFace} data={selectedJadwal} />
       <ModalEdit showEditModal={showedit} setShowEditModal={setShowedit} data={selectedJadwal} onUpdate={handleUpdate} />
     </>
   );

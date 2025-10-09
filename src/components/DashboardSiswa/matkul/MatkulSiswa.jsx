@@ -6,7 +6,6 @@ const MatkulSiswa = () => {
     try {
       const resMatkul = await api.get('/siswa/matkulsiswa');
       setDataMatkul(resMatkul.data);
-      console.log(resMatkul.data);
     } catch (err) {
       console.log(err.response.data.message);
     }

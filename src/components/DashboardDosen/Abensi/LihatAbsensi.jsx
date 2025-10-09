@@ -128,7 +128,15 @@ const LihatAbsensi = ({ data, modalLihat, OnClose }) => {
                     <tr key={index}>
                       <td className=" px-4 py-2">{item.nama}</td>
                       <td className=" px-4 py-2">{item.nim}</td>
-                      <td className=" px-4 py-2">{item.status}</td>
+                      <td className="px-4 py-2">
+                        <span
+                          className={`px-2 py-1 rounded-full text-white ${
+                            item.status === 'hadir' ? 'bg-green-500' : item.status === 'sakit' ? 'bg-yellow-500' : item.status === 'izin' ? 'bg-blue-500' : item.status === 'alpha' ? 'bg-red-500' : 'bg-gray-500'
+                          }`}
+                        >
+                          {item.status}
+                        </span>
+                      </td>{' '}
                     </tr>
                   ))}
                 </tbody>

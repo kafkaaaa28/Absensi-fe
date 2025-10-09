@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import api from '../../../utils/api';
+import { Spinner } from 'flowbite-react';
 import { MdOutlineRefresh } from 'react-icons/md';
 const ModalEditStatus = ({ data, onUpdate, showEditModal, setShowEditModal }) => {
   const [formData, setFormData] = useState({ ...data });
@@ -15,6 +16,17 @@ const ModalEditStatus = ({ data, onUpdate, showEditModal, setShowEditModal }) =>
     try {
       const res = await api.get(`/dosen/absensi/siswa/${data.id_jadwal}/${data.id_kelas}`);
       setData(res.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const refreshStatus = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await fetchSiswa();
     } catch (err) {
       console.log(err);
     } finally {
@@ -39,8 +51,15 @@ const ModalEditStatus = ({ data, onUpdate, showEditModal, setShowEditModal }) =>
         <h2 className="text-xl font-bold text-black text-center">Edit Absensi</h2>
       </ModalHeader>
       <ModalBody className="bg-white">
-        <button onClick={fetchSiswa} className="w-full flex items-center mb-2 justify-center text-sm gap-3 md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300" type="button">
-          <MdOutlineRefresh className="text-lg" /> Refresh Status
+        <button onClick={refreshStatus} className="w-full flex items-center mb-2 justify-center text-sm gap-3 md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300" type="button">
+          {loading ? (
+            <Spinner color="info" aria-label="Info spinner example" size="sm" />
+          ) : (
+            <>
+              <MdOutlineRefresh className="text-lg" />
+              <p>Refresh Status</p>
+            </>
+          )}
         </button>
         <form onSubmit={handleSubmit} className="space-y-3">
           <div className="space-y-4">
